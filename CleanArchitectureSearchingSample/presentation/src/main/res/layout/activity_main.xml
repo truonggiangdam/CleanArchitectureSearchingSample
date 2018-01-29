@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+        <Button
+            android:background="@color/colorPrimary"
+            android:onClick="onButtonSeachClick"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/buttonSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Search"/>
+        <EditText
+            android:id="@+id/editKeyWork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/buttonSearch"
+            android:layout_marginRight="16dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginTop="16dp"
+        android:padding="32dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:visibility="gone"
+            android:text="No result match key work"
+            android:id="@+id/textEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"/>
+
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:id="@+id/progressLoading"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+    </RelativeLayout>
+</LinearLayout>
+
