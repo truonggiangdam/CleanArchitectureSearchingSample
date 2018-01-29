@@ -112,7 +112,7 @@ public class SearchActivity extends BaseActivity implements SearchUserView {
     public void onButtonSeachClick(View view) {
         String keyWork = editKeyWork.getText().toString();
         if(!TextUtils.isEmpty(keyWork)) {
-            searchUserPresenter.search(keyWork);
+            searchUserPresenter.search(keyWork.trim());
             editKeyWork.setText("");
         }
     }
