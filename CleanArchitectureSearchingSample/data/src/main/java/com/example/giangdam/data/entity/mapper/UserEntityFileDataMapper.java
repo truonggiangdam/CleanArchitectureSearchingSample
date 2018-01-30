@@ -22,7 +22,9 @@ public class UserEntityFileDataMapper {
     public UserEntity transform(UserData userData) {
         UserEntity userEntity = null;
         if(userData != null) {
-            userEntity = new UserEntity(userData.userName, userData.email);
+            userEntity = new UserEntity();
+            userEntity.setUserName(userData.userName);
+            userEntity.setEmail(userData.email);
         }
 
         return userEntity;

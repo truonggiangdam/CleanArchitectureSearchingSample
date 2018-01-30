@@ -7,11 +7,18 @@ import com.example.giangdam.data.repository.datasource.UserDataStoreFactory;
 import com.example.giangdam.domain.model.User;
 import com.example.giangdam.domain.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
@@ -30,14 +37,60 @@ public class UserDataRepository implements UserRepository{
 
 
     @Override
-    public Observable<List<User>> users(String userName) {
-        final UserDataStore userDataStore = this.userDataStoreFactory.create();
+    public Observable<List<User>> users(final String userName) {
+        final UserDataStore userDataStoreGetList = this.userDataStoreFactory.create();
+        final UserDataStore userDataStoreGetDetails = this.userDataStoreFactory.createCloudDataStore();
 
-        return userDataStore.userEntityList(userName).map(new Function<List<UserEntity>, List<User>>() {
+
+        return userDataStoreGetList.userEntityList().map(new Function<List<UserEntity>, List<User>>() {
             @Override
-            public List<User> apply(List<UserEntity> userEntities) throws Exception {
-                return userEntityDataMapper.transform(userEntities);
+            public List<User> apply(List<UserEntity> userEntityList) throws Exception {
+                final List<Integer> idList = getIdUserSearchResult(userEntityList, userName);
+
+                final List<User> resultList = new ArrayList<>();
+
+                if( idList != null && idList.size() > 0) {
+                    Observable.fromIterable(idList)
+                            .flatMap(new Function<Integer, Observable<UserEntity>>() {
+                                @Override
+                                public Observable<UserEntity> apply(Integer integer) throws Exception {
+                                    return userDataStoreGetDetails.userEntityDetails(integer);
+                                }
+                            })
+                            .subscribe(new Observer<UserEntity>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onNext(UserEntity userEntity) {
+                                    resultList.add(userEntityDataMapper.transform(userEntity));
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                }
+                            });
+                }
+
+                return resultList;
             }
         });
+    }
+
+    private List<Integer> getIdUserSearchResult(List<UserEntity> userEntityList, String userName) {
+        List<Integer> idList = new ArrayList<>();
+        for(UserEntity userEntity : userEntityList) {
+            if(userEntity != null && userEntity.getUserName().toLowerCase().contains(userName.toLowerCase())) {
+                idList.add(userEntity.getUserId());
+            }
+        }
+        return idList;
     }
 }

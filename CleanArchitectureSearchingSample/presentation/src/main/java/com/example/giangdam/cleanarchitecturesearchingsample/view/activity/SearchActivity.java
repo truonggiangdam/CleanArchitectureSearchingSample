@@ -66,7 +66,7 @@ public class SearchActivity extends BaseActivity implements SearchUserView {
     public void updateUI(List<UserModel> users) {
         recyclerView.setVisibility(View.VISIBLE);
         textEmpty.setVisibility(View.GONE);
-       searchListAdapter.updateDataSet(users);
+        searchListAdapter.updateDataSet(users);
     }
 
     @Override

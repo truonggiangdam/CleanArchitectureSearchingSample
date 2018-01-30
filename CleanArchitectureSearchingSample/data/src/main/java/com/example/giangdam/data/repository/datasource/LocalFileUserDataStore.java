@@ -18,19 +18,28 @@ public class LocalFileUserDataStore implements UserDataStore {
 
     private final LoadDataFromFileHelper helper;
     private final UserEntityFileDataMapper mapper;
+    private final String userName;
 
-    LocalFileUserDataStore(LoadDataFromFileHelper helper, UserEntityFileDataMapper userEntityFileDataMapper){
+    LocalFileUserDataStore(LoadDataFromFileHelper helper, UserEntityFileDataMapper userEntityFileDataMapper,
+                           String userName){
         this.helper = helper;
         this.mapper = userEntityFileDataMapper;
+        this.userName = userName;
     }
 
+
     @Override
-    public Observable<List<UserEntity>> userEntityList(String userName) {
+    public Observable<List<UserEntity>> userEntityList() {
         return this.helper.searchUsersByUserName(userName).map(new Function<List<UserData>, List<UserEntity>>() {
             @Override
             public List<UserEntity> apply(List<UserData> userData) throws Exception {
                 return mapper.transform(userData);
             }
         });
+    }
+
+    @Override
+    public Observable<UserEntity> userEntityDetails(int userId) {
+        return null;
     }
 }

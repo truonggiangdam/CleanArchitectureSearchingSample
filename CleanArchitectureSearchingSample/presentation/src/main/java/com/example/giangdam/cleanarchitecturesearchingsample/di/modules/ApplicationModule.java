@@ -1,8 +1,12 @@
 package com.example.giangdam.cleanarchitecturesearchingsample.di.modules;
 
+import android.content.Context;
+
 import com.example.giangdam.cleanarchitecturesearchingsample.MyApplication;
 import com.example.giangdam.cleanarchitecturesearchingsample.thread.JobExecutor;
 import com.example.giangdam.cleanarchitecturesearchingsample.thread.UIThread;
+import com.example.giangdam.data.cache.UserCache;
+import com.example.giangdam.data.cache.UserCacheImpl;
 import com.example.giangdam.data.repository.UserDataRepository;
 import com.example.giangdam.domain.repository.UserRepository;
 import com.example.giangdam.domain.thread.ObserveOnThread;
@@ -25,6 +29,11 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
+    Context provideApplicationContext() {
+        return this.application;
+    }
+
+    @Provides @Singleton
     ObserveOnThread provideObserveOnThread(UIThread uiThread) {
         return uiThread;
     }
@@ -35,8 +44,15 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
+    UserCache provideUserCache(UserCacheImpl userCache){
+        return userCache;
+    }
+
+
+    @Provides @Singleton
     UserRepository provideUserRepository(UserDataRepository userDataRepository) {
         return userDataRepository;
     }
+
 
 }

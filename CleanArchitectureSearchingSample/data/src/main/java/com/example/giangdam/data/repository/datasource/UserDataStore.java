@@ -12,5 +12,7 @@ import io.reactivex.Observable;
  */
 
 public interface UserDataStore {
-    Observable<List<UserEntity>> userEntityList(final String userName);
+    Observable<List<UserEntity>> userEntityList();
+
+    Observable<UserEntity> userEntityDetails(final int userId);
 }

@@ -20,6 +20,8 @@ ext {
     rxJavaVersion = '2.1.8'
     rxAndroidVersion = '2.0.1'
     javaxInjectVersion = '1'
+    gsonVersion = '2.3'
+    okHttpVersion = '3.9.1'
 
     //Testing ...
     jUnitVersion = '4.12'
@@ -53,6 +55,8 @@ ext {
             rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
             rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}",
+            okHttp:             "com.squareup.okhttp3:okhttp:${okHttpVersion}",
+            gson:               "com.google.code.gson:gson:${gsonVersion}"
     ]
 
     dataTestDependencies = [
