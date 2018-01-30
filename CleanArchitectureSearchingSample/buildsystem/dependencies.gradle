@@ -1,0 +1,63 @@
+allprojects {
+    repositories {
+        jcenter()
+        google()
+    }
+}
+
+ext {
+    // Android
+    //androidBuildToolsVersion = ""
+    androidMinSdkVersion = 15
+    androidTargetSdkVersion = 26
+    androidCompileSdkVersion = 26
+
+    //Libraries
+    recyclerViewVersion = '27.0.2'
+    supportAppCompatVersion = '27.0.2'
+    constraintLayoutVersion = '1.0.2'
+    daggerVersion = '2.8'
+    rxJavaVersion = '2.1.8'
+    rxAndroidVersion = '2.0.1'
+    javaxInjectVersion = '1'
+
+    //Testing ...
+    jUnitVersion = '4.12'
+    supportTestRunnerVersion = '1.0.1'
+    espressoCoreVersion = '3.0.1'
+
+
+    presentationDependencies = [
+            reccyclerView: "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+            supportAppCompat: "com.android.support:appcompat-v7:${supportAppCompatVersion}",
+            constraintLayout: "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
+            daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger:             "com.google.dagger:dagger:${daggerVersion}",
+            rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+    ]
+
+    presentationTestDependencies = [
+            jUnit: "junit:junit:${jUnitVersion}",
+            testRunner: "com.android.support.test:runner:${supportTestRunnerVersion}",
+            espressoCore: "com.android.support.test.espresso:espresso-core:${espressoCoreVersion}"
+    ]
+
+    domainDependencies = [
+            rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}"
+    ]
+
+    dataDependencies = [
+            supportAppCompat: "com.android.support:appcompat-v7:${supportAppCompatVersion}",
+            rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+            javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}",
+    ]
+
+    dataTestDependencies = [
+            jUnit: "junit:junit:${jUnitVersion}",
+            testRunner: "com.android.support.test:runner:${supportTestRunnerVersion}",
+            espressoCore: "com.android.support.test.espresso:espresso-core:${espressoCoreVersion}"
+    ]
+}

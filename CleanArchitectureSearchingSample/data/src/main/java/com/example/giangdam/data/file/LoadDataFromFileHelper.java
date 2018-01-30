@@ -41,6 +41,7 @@ public class LoadDataFromFileHelper {
                 userDataList.add(userData);
             }
         }
+        Log.d("GDD", "result list size: " + userDataList.size());
         return userDataList;
     }
 }
