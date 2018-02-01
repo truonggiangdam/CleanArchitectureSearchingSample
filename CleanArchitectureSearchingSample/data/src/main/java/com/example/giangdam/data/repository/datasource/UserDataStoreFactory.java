@@ -4,13 +4,12 @@ package com.example.giangdam.data.repository.datasource;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.example.giangdam.data.api.RestApi;
-import com.example.giangdam.data.api.RestApiImpl;
+import com.example.giangdam.data.api.CallableRestApi;
+import com.example.giangdam.data.api.CallableRestApiImpl;
 import com.example.giangdam.data.cache.UserCache;
 import com.example.giangdam.data.entity.mapper.UserEntityFileDataMapper;
 import com.example.giangdam.data.entity.mapper.UserEntityJsonMapper;
 import com.example.giangdam.data.file.LoadDataFromFileHelper;
-import com.example.giangdam.data.repository.UserDataRepository;
 
 import javax.inject.Inject;
 
@@ -19,13 +18,12 @@ import javax.inject.Inject;
  */
 
 public class UserDataStoreFactory {
-    private final Context context;
     private final UserCache userCache;
-
+    private final CloudUserDataStore cloudUserDataStore;
     @Inject
-    UserDataStoreFactory(@NonNull Context context, @NonNull UserCache userCache) {
-        this.context = context;
+    UserDataStoreFactory(@NonNull UserCache userCache, CloudUserDataStore cloudUserDataStore) {
         this.userCache = userCache;
+        this.cloudUserDataStore = cloudUserDataStore;
     }
 
     public UserDataStore create() {
@@ -41,10 +39,7 @@ public class UserDataStoreFactory {
     }
 
     public UserDataStore createCloudDataStore() {
-        final UserEntityJsonMapper userEntityJsonMapper = new UserEntityJsonMapper();
-        final RestApi restApi = new RestApiImpl(this.context, userEntityJsonMapper);
-
-        return new CloudUserDataStore(restApi, this.userCache);
+        return cloudUserDataStore;
     }
 
     private UserDataStore createDiskUserDataStore() {

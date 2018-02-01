@@ -41,5 +41,9 @@ dependencies {
     implementation dataDependencies.rxAndroid
     implementation dataDependencies.javaxInject
     implementation dataDependencies.okHttp
+    implementation dataDependencies.okHttpInterceptor
     implementation dataDependencies.gson
+    implementation dataDependencies.retrofit
+    implementation dataDependencies.retrofitctgson
+    implementation dataDependencies.retrofitCAdapter
 }

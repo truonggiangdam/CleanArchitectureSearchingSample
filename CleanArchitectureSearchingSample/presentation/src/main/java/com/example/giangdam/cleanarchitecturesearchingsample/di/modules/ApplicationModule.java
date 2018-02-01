@@ -5,13 +5,23 @@ import android.content.Context;
 import com.example.giangdam.cleanarchitecturesearchingsample.MyApplication;
 import com.example.giangdam.cleanarchitecturesearchingsample.thread.JobExecutor;
 import com.example.giangdam.cleanarchitecturesearchingsample.thread.UIThread;
+import com.example.giangdam.data.api.ApiClient;
+import com.example.giangdam.data.api.ApiClientSwitcher;
+import com.example.giangdam.data.api.CallableClient;
+import com.example.giangdam.data.api.CallableRestApi;
+import com.example.giangdam.data.api.CallableRestApiImpl;
+import com.example.giangdam.data.api.RetrofitClient;
+import com.example.giangdam.data.api.RetrofitProvideResources;
+import com.example.giangdam.data.api.RetrofitRestApi;
 import com.example.giangdam.data.cache.UserCache;
 import com.example.giangdam.data.cache.UserCacheImpl;
 import com.example.giangdam.data.repository.UserDataRepository;
+import com.example.giangdam.domain.config.DeveloperConfig;
 import com.example.giangdam.domain.repository.UserRepository;
 import com.example.giangdam.domain.thread.ObserveOnThread;
 import com.example.giangdam.domain.thread.SubcribeOnThread;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -48,11 +58,31 @@ public class ApplicationModule {
         return userCache;
     }
 
-
     @Provides @Singleton
     UserRepository provideUserRepository(UserDataRepository userDataRepository) {
         return userDataRepository;
     }
 
 
+    @Provides @Singleton
+    CallableRestApi provideCallableRestApi(CallableRestApiImpl callableRestApi) {
+        return callableRestApi;
+    }
+
+    @Provides @Singleton
+    RetrofitRestApi provideRetrofitRestApi(RetrofitProvideResources provideResources) {
+        return provideResources.provideApi();
+    }
+
+    @Provides @Singleton
+    ApiClient provideApiClient(CallableClient callableClient, RetrofitClient retrofitClient) {
+        switch (DeveloperConfig.currentCloudClientLibrary()) {
+            case CALLABLE:
+                return callableClient;
+            case RETROFIT:
+                return retrofitClient;
+            default:
+                return callableClient;
+        }
+    }
 }

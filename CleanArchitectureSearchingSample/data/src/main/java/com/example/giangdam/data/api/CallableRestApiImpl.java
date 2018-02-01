@@ -13,6 +13,8 @@ import com.example.giangdam.data.mimic.MimicInternetDelay;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -21,11 +23,12 @@ import io.reactivex.ObservableOnSubscribe;
  * Created by cpu11326-local on 30/01/2018.
  */
 
-public class RestApiImpl implements RestApi {
+public class CallableRestApiImpl implements CallableRestApi {
     private final Context context;
     private final UserEntityJsonMapper userEntityJsonMapper;
 
-    public RestApiImpl(Context context, UserEntityJsonMapper userEntityJsonMapper) {
+    @Inject
+    public CallableRestApiImpl(Context context, UserEntityJsonMapper userEntityJsonMapper) {
         if(context == null || userEntityJsonMapper == null) {
             throw  new IllegalArgumentException("The constructor parameters can not be null");
         }
@@ -75,33 +78,17 @@ public class RestApiImpl implements RestApi {
     }
 
     private String getUserEntitiesFromApi() throws MalformedURLException {
-        // mimic delay internet here: 1s
-        mimicInternetDelay();
-
-        return ApiConnection.createGET(API_URL_GET_USER_LIST).requestSyncCall();
+        return CallableConnection.createGET(API_URL_GET_USER_LIST).requestSyncCall();
     }
 
     private String getUserDetailsFromApi(int userId) throws MalformedURLException {
-        // mimic delay internet here: 1s
-        mimicInternetDelay();
-
         String apiUrl = API_URL_GET_USER_DETAILS + userId + ".json";
-        return ApiConnection.createGET(apiUrl).requestSyncCall();
+        return CallableConnection.createGET(apiUrl).requestSyncCall();
     }
 
     private boolean isThereInternetConnection() {
         ConnectivityManager connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnectedOrConnecting());
-    }
-
-    private void mimicInternetDelay() {
-        try {
-            MimicInternetDelay.delay(Thread.currentThread());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (BaseLog.CanNotLogException e) {
-            e.printStackTrace();
-        }
     }
 }

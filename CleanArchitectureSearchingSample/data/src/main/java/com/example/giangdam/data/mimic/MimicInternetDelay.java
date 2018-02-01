@@ -13,7 +13,7 @@ public class MimicInternetDelay {
 
     public static void delay(Thread thread) throws InterruptedException, BaseLog.CanNotLogException {
         if(DeveloperConfig.ableToMimicInternetDelay()) {
-            GLog.d("mimic internet delay: " + DELAY_TIME + "milliseconds");
+            GLog.d("mimic internet delay: " + DELAY_TIME + " milliseconds");
             thread.sleep(DELAY_TIME);
         }
     }

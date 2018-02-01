@@ -9,8 +9,6 @@ import java.net.URL;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import javax.microedition.khronos.opengles.GL;
-
 import io.reactivex.annotations.Nullable;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -19,7 +17,7 @@ import okhttp3.Request;
  * Created by cpu11326-local on 30/01/2018.
  */
 
-public class ApiConnection implements Callable<String> {
+public class CallableConnection implements Callable<String> {
 
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
     private static final String CONTENT_TYPE_VALUE_JSON = "application/json; charset=utf-8";
@@ -27,12 +25,12 @@ public class ApiConnection implements Callable<String> {
     private URL url;
     private String response;
 
-    private ApiConnection(String url) throws MalformedURLException {
+    private CallableConnection(String url) throws MalformedURLException {
         this.url = new URL(url);
     }
 
-    static ApiConnection createGET(String url) throws MalformedURLException {
-        return new ApiConnection(url);
+    static CallableConnection createGET(String url) throws MalformedURLException {
+        return new CallableConnection(url);
     }
 
     @Nullable

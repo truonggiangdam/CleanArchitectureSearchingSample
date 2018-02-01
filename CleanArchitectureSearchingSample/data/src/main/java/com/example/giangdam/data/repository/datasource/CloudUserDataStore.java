@@ -1,10 +1,16 @@
 package com.example.giangdam.data.repository.datasource;
 
-import com.example.giangdam.data.api.RestApi;
+import com.example.giangdam.data.api.ApiClient;
+import com.example.giangdam.data.api.ApiClientSwitcher;
+import com.example.giangdam.data.api.CallableRestApi;
 import com.example.giangdam.data.cache.UserCache;
 import com.example.giangdam.data.entity.UserEntity;
+import com.example.giangdam.data.log.BaseLog;
+import com.example.giangdam.data.mimic.MimicInternetDelay;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
@@ -14,18 +20,22 @@ import io.reactivex.functions.Consumer;
  */
 
 public class CloudUserDataStore implements UserDataStore {
-    private final RestApi restApi;
     private final UserCache userCache;
+    private  final ApiClientSwitcher apiClientSwitcher;
 
-    CloudUserDataStore(RestApi restApi, UserCache userCache) {
-        this.restApi = restApi;
+    @Inject
+    CloudUserDataStore(UserCache userCache, ApiClientSwitcher apiClientSwitcher) {
         this.userCache = userCache;
+        this.apiClientSwitcher = apiClientSwitcher;
     }
 
 
     @Override
     public Observable<List<UserEntity>> userEntityList() {
-        return this.restApi.userEntityList().doOnNext(new Consumer<List<UserEntity>>() {
+        // mimic delay internet here: 1s
+        mimicInternetDelay();
+
+        return apiClientSwitcher.userEntityList().doOnNext(new Consumer<List<UserEntity>>() {
             @Override
             public void accept(List<UserEntity> userEntityList) throws Exception {
                 CloudUserDataStore.this.userCache.put(userEntityList);
@@ -35,6 +45,19 @@ public class CloudUserDataStore implements UserDataStore {
 
     @Override
     public Observable<UserEntity> userEntityDetails(int userId) {
-        return this.restApi.userEntityById(userId);
+        // mimic delay internet here: 1s
+        mimicInternetDelay();
+
+        return apiClientSwitcher.userEntityById(userId);
+    }
+
+    private void mimicInternetDelay() {
+        try {
+            MimicInternetDelay.delay(Thread.currentThread());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BaseLog.CanNotLogException e) {
+            e.printStackTrace();
+        }
     }
 }

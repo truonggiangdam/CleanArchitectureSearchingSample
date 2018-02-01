@@ -8,8 +8,8 @@ public class DeveloperConfig {
     private static final boolean ABLE_TO_LOG = true;
     private static final boolean ABLE_TO_MIMIC_INTERNET_DELAY = true;
 
-    private enum CLOUD_CLIENT_LIBRARY {
-        CALLABLE, RETROFIT;
+    public enum CLOUD_CLIENT_LIBRARY {
+        CALLABLE, RETROFIT
     }
 
     public static boolean ableToLog(){
@@ -21,6 +21,6 @@ public class DeveloperConfig {
     }
 
     public static CLOUD_CLIENT_LIBRARY currentCloudClientLibrary() {
-        return CLOUD_CLIENT_LIBRARY.CALLABLE;
+        return CLOUD_CLIENT_LIBRARY.RETROFIT;
     }
 }

@@ -22,6 +22,7 @@ ext {
     javaxInjectVersion = '1'
     gsonVersion = '2.3'
     okHttpVersion = '3.9.1'
+    retrofit2 = '2.3.0'
 
     //Testing ...
     jUnitVersion = '4.12'
@@ -51,12 +52,16 @@ ext {
     ]
 
     dataDependencies = [
-            supportAppCompat: "com.android.support:appcompat-v7:${supportAppCompatVersion}",
+            supportAppCompat:   "com.android.support:appcompat-v7:${supportAppCompatVersion}",
             rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
             rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}",
             okHttp:             "com.squareup.okhttp3:okhttp:${okHttpVersion}",
-            gson:               "com.google.code.gson:gson:${gsonVersion}"
+            okHttpInterceptor:  "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
+            gson:               "com.google.code.gson:gson:${gsonVersion}",
+            retrofit:           "com.squareup.retrofit2:retrofit:${retrofit2}",
+            retrofitctgson:     "com.squareup.retrofit2:converter-gson:${retrofit2}",
+            retrofitCAdapter:   "com.squareup.retrofit2:adapter-rxjava2:${retrofit2}"
     ]
 
     dataTestDependencies = [

@@ -10,7 +10,7 @@ import io.reactivex.Observable;
  * Created by cpu11326-local on 30/01/2018.
  */
 
-public interface RestApi {
+public interface CallableRestApi {
     String API_BASE_URL =
             "https://raw.githubusercontent.com/android10/Sample-Data/master/Android-CleanArchitecture/";
 
