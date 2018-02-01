@@ -1,10 +1,15 @@
 package com.example.giangdam.data.api;
 
+import com.example.giangdam.data.log.BaseLog;
+import com.example.giangdam.data.log.GLog;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+
+import javax.microedition.khronos.opengles.GL;
 
 import io.reactivex.annotations.Nullable;
 import okhttp3.OkHttpClient;
@@ -33,6 +38,8 @@ public class ApiConnection implements Callable<String> {
     @Nullable
     String requestSyncCall() {
         connectToApi();
+        // Log response
+        logD("Response: " + response);
         return response;
     }
 
@@ -44,10 +51,31 @@ public class ApiConnection implements Callable<String> {
                 .get()
                 .build();
 
+        // Log request
+        logD("Request: " + request.toString());
+
         try {
             this.response = okHttpClient.newCall(request).execute().body().string();
         } catch (IOException e) {
             e.printStackTrace();
+            logE(e.getCause());
+        }
+    }
+
+    private void logD(String message) {
+        try {
+            GLog.d(message);
+        } catch (BaseLog.CanNotLogException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void logE(Throwable throwable) {
+        // Log error
+        try {
+            GLog.e(throwable);
+        } catch (BaseLog.CanNotLogException e1) {
+            e1.printStackTrace();
         }
     }
 

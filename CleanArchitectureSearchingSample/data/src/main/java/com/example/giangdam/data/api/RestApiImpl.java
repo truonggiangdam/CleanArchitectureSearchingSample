@@ -7,6 +7,8 @@ import android.net.NetworkInfo;
 
 import com.example.giangdam.data.entity.UserEntity;
 import com.example.giangdam.data.entity.mapper.UserEntityJsonMapper;
+import com.example.giangdam.data.log.BaseLog;
+import com.example.giangdam.data.mimic.MimicInternetDelay;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -73,10 +75,16 @@ public class RestApiImpl implements RestApi {
     }
 
     private String getUserEntitiesFromApi() throws MalformedURLException {
+        // mimic delay internet here: 1s
+        mimicInternetDelay();
+
         return ApiConnection.createGET(API_URL_GET_USER_LIST).requestSyncCall();
     }
 
     private String getUserDetailsFromApi(int userId) throws MalformedURLException {
+        // mimic delay internet here: 1s
+        mimicInternetDelay();
+
         String apiUrl = API_URL_GET_USER_DETAILS + userId + ".json";
         return ApiConnection.createGET(apiUrl).requestSyncCall();
     }
@@ -85,5 +93,15 @@ public class RestApiImpl implements RestApi {
         ConnectivityManager connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnectedOrConnecting());
+    }
+
+    private void mimicInternetDelay() {
+        try {
+            MimicInternetDelay.delay(Thread.currentThread());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BaseLog.CanNotLogException e) {
+            e.printStackTrace();
+        }
     }
 }
