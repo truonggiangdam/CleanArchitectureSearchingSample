@@ -46,7 +46,7 @@ public class UserDataStoreFactory {
         return new DiskUserDataStore(this.userCache);
     }
 
-    private UserDataStore createLocalFileUserDataStore(String userName) {
+    public UserDataStore createLocalFileUserDataStore(String userName) {
         LoadDataFromFileHelper helper = new LoadDataFromFileHelper();
         UserEntityFileDataMapper userEntityFileDataMapper = new UserEntityFileDataMapper();
         return new LocalFileUserDataStore(helper, userEntityFileDataMapper, userName);

@@ -6,7 +6,7 @@ package com.example.giangdam.domain.config;
 
 public class DeveloperConfig {
     private static final boolean ABLE_TO_LOG = true;
-    private static final boolean ABLE_TO_MIMIC_INTERNET_DELAY = true;
+    private static final boolean ABLE_TO_MIMIC_INTERNET_DELAY = false;
 
     public enum CLOUD_CLIENT_LIBRARY {
         CALLABLE, RETROFIT

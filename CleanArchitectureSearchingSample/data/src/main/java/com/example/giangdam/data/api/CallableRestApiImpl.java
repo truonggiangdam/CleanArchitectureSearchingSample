@@ -7,8 +7,6 @@ import android.net.NetworkInfo;
 
 import com.example.giangdam.data.entity.UserEntity;
 import com.example.giangdam.data.entity.mapper.UserEntityJsonMapper;
-import com.example.giangdam.data.log.BaseLog;
-import com.example.giangdam.data.mimic.MimicInternetDelay;
 
 import java.net.MalformedURLException;
 import java.util.List;

@@ -8,6 +8,7 @@ import com.example.giangdam.domain.model.User;
 import com.example.giangdam.domain.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
@@ -40,9 +42,9 @@ public class UserDataRepository implements UserRepository{
     public Observable<List<User>> users(final String userName) {
         final UserDataStore userDataStoreGetList = this.userDataStoreFactory.create();
         final UserDataStore userDataStoreGetDetails = this.userDataStoreFactory.createCloudDataStore();
+        final UserDataStore userDataStoreFromFile = this.userDataStoreFactory.createLocalFileUserDataStore(userName);
 
-
-        return userDataStoreGetList.userEntityList().map(new Function<List<UserEntity>, List<User>>() {
+        Observable<List<User>> sourceFromServer =  userDataStoreGetList.userEntityList().map(new Function<List<UserEntity>, List<User>>() {
             @Override
             public List<User> apply(List<UserEntity> userEntityList) throws Exception {
                 final List<Integer> idList = getIdUserSearchResult(userEntityList, userName);
@@ -82,6 +84,27 @@ public class UserDataRepository implements UserRepository{
                 return resultList;
             }
         });
+
+        Observable<List<User>> sourceFromFile = userDataStoreFromFile.userEntityList().map(new Function<List<UserEntity>, List<User>>() {
+            @Override
+            public List<User> apply(List<UserEntity> userEntityList) throws Exception {
+                return userEntityDataMapper.transform(userEntityList);
+            }
+        });
+
+        return Observable.zip(sourceFromServer, sourceFromFile, new BiFunction<List<User>, List<User>, List<User>>() {
+            @Override
+            public List<User> apply(List<User> users, List<User> users2) throws Exception {
+                return union(users, users2) ;
+            }
+        });
+
+    }
+
+    public static List union(final List list1, final List list2) {
+        final ArrayList result = new ArrayList(list1);
+        result.addAll(list2);
+        return result;
     }
 
     private List<Integer> getIdUserSearchResult(List<UserEntity> userEntityList, String userName) {
