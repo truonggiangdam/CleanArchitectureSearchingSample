@@ -8,6 +8,8 @@ import io.reactivex.Observable;
 
 /**
  * Created by cpu11326-local on 01/02/2018.
+ * Api đầu mà tất cả các client library phải implement nhằm cung cấp một phương thức
+ * giao tiếp với các thành phần khác.
  */
 
 public interface ApiClient {

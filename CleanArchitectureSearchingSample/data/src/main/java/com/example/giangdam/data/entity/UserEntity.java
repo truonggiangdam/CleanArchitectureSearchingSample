@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by cpu11326-local on 29/01/2018.
+ * Entity class hold the user data.
  */
 
 public class UserEntity {

@@ -8,6 +8,7 @@ import io.reactivex.Observable;
 
 /**
  * Created by cpu11326-local on 29/01/2018.
+ * Interface mà các implement tại data module cần để giao tiếp với tâng domain.
  */
 
 public interface UserRepository {

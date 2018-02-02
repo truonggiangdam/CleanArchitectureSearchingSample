@@ -21,11 +21,21 @@ public class UserEntityJsonMapper {
         this.gson = new Gson();
     }
 
+    /**
+     * Convert from jsonString to userEntity object.
+     * @param userJsonResponse
+     * @return
+     */
     public UserEntity transformUserEntity(String userJsonResponse) {
         final Type userEntityType = new TypeToken<UserEntity>() {}.getType();
         return this.gson.fromJson(userJsonResponse, userEntityType);
     }
 
+    /**
+     * Convert from jsonString to userEntityList.
+     * @param userListJsonResponse
+     * @return
+     */
     public List<UserEntity> transformUserEntityCollection(String userListJsonResponse) {
         final Type listOfUserEntityType = new TypeToken<List<UserEntity>>() {}.getType();
         return this.gson.fromJson(userListJsonResponse, listOfUserEntityType);

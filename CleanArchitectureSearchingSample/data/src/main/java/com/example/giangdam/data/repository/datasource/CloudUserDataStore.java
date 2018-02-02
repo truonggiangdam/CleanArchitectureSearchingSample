@@ -1,8 +1,6 @@
 package com.example.giangdam.data.repository.datasource;
 
-import com.example.giangdam.data.api.ApiClient;
 import com.example.giangdam.data.api.ApiClientSwitcher;
-import com.example.giangdam.data.api.CallableRestApi;
 import com.example.giangdam.data.cache.UserCache;
 import com.example.giangdam.data.entity.UserEntity;
 import com.example.giangdam.data.log.BaseLog;
@@ -38,6 +36,7 @@ public class CloudUserDataStore implements UserDataStore {
         return apiClientSwitcher.userEntityList().doOnNext(new Consumer<List<UserEntity>>() {
             @Override
             public void accept(List<UserEntity> userEntityList) throws Exception {
+                // cache data
                 CloudUserDataStore.this.userCache.put(userEntityList);
             }
         });

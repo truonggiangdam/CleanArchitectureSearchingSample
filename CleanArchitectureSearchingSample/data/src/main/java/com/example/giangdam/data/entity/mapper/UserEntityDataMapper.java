@@ -19,6 +19,11 @@ public class UserEntityDataMapper {
     @Inject
     UserEntityDataMapper() {}
 
+    /**
+     * Convert from userEntity to User
+     * @param userEntity
+     * @return
+     */
     public User transform(UserEntity userEntity) {
         User user = null;
         if(userEntity != null) {
@@ -28,6 +33,11 @@ public class UserEntityDataMapper {
         return user;
     }
 
+    /**
+     * Convert from userEntityLíst to userList
+     * @param userEntityCollection
+     * @return
+     */
     public List<User> transform(Collection<UserEntity> userEntityCollection) {
         final List<User> userList = new ArrayList<>();
         for(UserEntity userEntity: userEntityCollection) {

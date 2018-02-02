@@ -6,6 +6,7 @@ import com.example.giangdam.domain.config.DeveloperConfig;
 
 /**
  * Created by cpu11326-local on 01/02/2018.
+ * Base Log class.
  */
 
 public abstract class BaseLog {

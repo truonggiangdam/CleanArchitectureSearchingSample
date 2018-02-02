@@ -6,7 +6,6 @@ import com.example.giangdam.cleanarchitecturesearchingsample.MyApplication;
 import com.example.giangdam.cleanarchitecturesearchingsample.thread.JobExecutor;
 import com.example.giangdam.cleanarchitecturesearchingsample.thread.UIThread;
 import com.example.giangdam.data.api.ApiClient;
-import com.example.giangdam.data.api.ApiClientSwitcher;
 import com.example.giangdam.data.api.CallableClient;
 import com.example.giangdam.data.api.CallableRestApi;
 import com.example.giangdam.data.api.CallableRestApiImpl;
@@ -21,7 +20,6 @@ import com.example.giangdam.domain.repository.UserRepository;
 import com.example.giangdam.domain.thread.ObserveOnThread;
 import com.example.giangdam.domain.thread.SubcribeOnThread;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Module;

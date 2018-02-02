@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import com.example.giangdam.cleanarchitecturesearchingsample.di.modules.ActivityModule;
 import com.example.giangdam.cleanarchitecturesearchingsample.di.scope.PerActivity;
-import com.example.giangdam.cleanarchitecturesearchingsample.view.activity.BaseActivity;
 import com.example.giangdam.cleanarchitecturesearchingsample.view.activity.SearchActivity;
 
 import dagger.Component;

@@ -12,6 +12,7 @@ public class MimicInternetDelay {
     private static final long DELAY_TIME = 1000; // milliseconds
 
     public static void delay(Thread thread) throws InterruptedException, BaseLog.CanNotLogException {
+        // Kiểm tra xem có cờ support delay internet có bật hay không.
         if(DeveloperConfig.ableToMimicInternetDelay()) {
             GLog.d("mimic internet delay: " + DELAY_TIME + " milliseconds");
             thread.sleep(DELAY_TIME);

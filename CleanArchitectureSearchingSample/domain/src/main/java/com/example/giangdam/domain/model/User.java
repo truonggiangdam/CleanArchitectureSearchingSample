@@ -2,6 +2,7 @@ package com.example.giangdam.domain.model;
 
 /**
  * Created by cpu11326-local on 29/01/2018.
+ * Class thuần Java chứa các thông tin dữ liệu của user.
  */
 
 public class User {

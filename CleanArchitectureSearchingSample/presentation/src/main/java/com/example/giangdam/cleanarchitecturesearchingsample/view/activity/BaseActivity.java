@@ -21,8 +21,10 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // inject BaseActivity
         getApplicatioinComponent().inject(this);
 
+        // create ActivityComponent.
         activityComponent = DaggerActivityComponent.builder()
                 .applicationComponent(getApplicatioinComponent())
                 .activityModule(new ActivityModule(this))

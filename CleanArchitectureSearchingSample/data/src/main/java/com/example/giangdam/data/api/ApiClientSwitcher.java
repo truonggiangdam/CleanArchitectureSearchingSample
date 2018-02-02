@@ -9,6 +9,7 @@ import io.reactivex.Observable;
 
 /**
  * Created by cpu11326-local on 01/02/2018.
+ * Quản lý việc switch các client l phù hợp với nhu cầu.ibrary
  */
 
 public class ApiClientSwitcher{

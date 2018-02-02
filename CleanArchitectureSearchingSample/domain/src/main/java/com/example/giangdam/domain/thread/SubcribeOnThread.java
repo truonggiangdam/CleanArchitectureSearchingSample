@@ -4,6 +4,7 @@ import java.util.concurrent.Executor;
 
 /**
  * Created by cpu11326-local on 29/01/2018.
+ * Lấy về một executor Thread.
  */
 
 public interface SubcribeOnThread extends Executor {

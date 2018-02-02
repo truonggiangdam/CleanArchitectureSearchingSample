@@ -2,6 +2,7 @@ package com.example.giangdam.data.file;
 
 /**
  * Created by cpu11326-local on 29/01/2018.
+ * Fake data class.
  */
 
 public class UserData {
@@ -18,7 +19,9 @@ public class UserData {
     }
 
 
-
+    /**
+     * Fake data.
+     */
     public static UserData[] UserData = {
             new UserData("Khoa Hồ"        , "khoa.ho@gmail.com"),
             new UserData("Khoa Nguyễn"    , "khoa.nguyen@gmail.com"),

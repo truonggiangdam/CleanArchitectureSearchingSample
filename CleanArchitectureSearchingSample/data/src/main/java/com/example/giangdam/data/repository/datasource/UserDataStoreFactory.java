@@ -1,14 +1,9 @@
 package com.example.giangdam.data.repository.datasource;
 
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-
-import com.example.giangdam.data.api.CallableRestApi;
-import com.example.giangdam.data.api.CallableRestApiImpl;
 import com.example.giangdam.data.cache.UserCache;
 import com.example.giangdam.data.entity.mapper.UserEntityFileDataMapper;
-import com.example.giangdam.data.entity.mapper.UserEntityJsonMapper;
 import com.example.giangdam.data.file.LoadDataFromFileHelper;
 
 import javax.inject.Inject;
@@ -29,9 +24,12 @@ public class UserDataStoreFactory {
     public UserDataStore create() {
         UserDataStore userDataStore;
 
+        // kiểm tra tình trạng cache
         if(!this.userCache.isExpired() && this.userCache.isCached()) {
+            // nếu data  đã được cache
             userDataStore = createDiskUserDataStore();
         } else {
+            // ngược lại nếu data chưa được cache
             userDataStore = createCloudDataStore();
         }
 

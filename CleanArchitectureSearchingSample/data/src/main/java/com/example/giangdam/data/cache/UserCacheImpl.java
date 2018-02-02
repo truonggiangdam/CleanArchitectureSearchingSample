@@ -6,20 +6,16 @@ import com.example.giangdam.data.converter.JsonConverter;
 import com.example.giangdam.data.entity.UserEntity;
 import com.example.giangdam.data.file.FileManager;
 import com.example.giangdam.domain.thread.SubcribeOnThread;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 
 /**
  * Created by cpu11326-local on 30/01/2018.
+ * Cache data here
  */
 
 public class UserCacheImpl implements UserCache {
@@ -56,8 +52,13 @@ public class UserCacheImpl implements UserCache {
         return Observable.create(new ObservableOnSubscribe<List<UserEntity>>() {
             @Override
             public void subscribe(ObservableEmitter<List<UserEntity>> emitter) throws Exception {
+                // build cache file
                 final File userEntityListFile = UserCacheImpl.this.buildFile();
+
+                // đọc file content.
                 final String fileContent = UserCacheImpl.this.fileManager.readFileContent(userEntityListFile);
+
+                // convert jsonString sang List<UserEntity>.
                 final List<UserEntity> userEntityList = UserCacheImpl.this.converter.jsonToListObject(fileContent);
 
                 if(userEntityList != null) {
@@ -70,6 +71,10 @@ public class UserCacheImpl implements UserCache {
         });
     }
 
+    /**
+     * Build cache file.
+     * @return
+     */
     public File buildFile() {
         final StringBuilder fileNameBuilder = new StringBuilder();
         fileNameBuilder.append(this.cacheDir.getPath());
@@ -79,25 +84,45 @@ public class UserCacheImpl implements UserCache {
         return new File(fileNameBuilder.toString());
     }
 
+    /**
+     * Cache lại data
+     * @param userEntityList
+     */
     @Override
     public void put(List<UserEntity> userEntityList) {
         if(userEntityList != null) {
+            // Build cache file.
             final  File userEntityListFile = this.buildFile();
+
+            // Kiểm tra xem file đã được cache hay chưa, nếu chưa cache thì tiến hành cache
             if(!isCached()) {
+                // convert list Object sang json string.
                 final String jsonString = this.converter.listObjectToJson(userEntityList);
+
+                // Ghi cache asynchronously.
                 this.executeAsynchronously(new CacheWriter(this.fileManager,
                         userEntityListFile, jsonString));
+
+                // update thời gian update cache.
                 setLastCacheUpdateTimeMillis();
             }
         }
     }
 
+    /**
+     * Kiểm tra dữ liệu đã được cache hay chưa.
+     * @return
+     */
     @Override
     public boolean isCached() {
         final File userEntityListFile = this.buildFile();
         return this.fileManager.exists(userEntityListFile);
     }
 
+    /**
+     * xác định cache đã expire hay chưa.
+     * @return
+     */
     @Override
     public boolean isExpired() {
         long currentTime = System.currentTimeMillis();
@@ -112,6 +137,10 @@ public class UserCacheImpl implements UserCache {
         return expired;
     }
 
+
+    /**
+     * Xóa hết cache.
+     */
     @Override
     public void evictAll() {
         this.executeAsynchronously(new CacheEvictor(this.fileManager, this.cacheDir));

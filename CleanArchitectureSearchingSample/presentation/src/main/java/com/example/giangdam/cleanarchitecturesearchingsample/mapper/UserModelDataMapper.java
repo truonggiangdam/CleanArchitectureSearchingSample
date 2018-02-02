@@ -19,6 +19,11 @@ public class UserModelDataMapper {
 
     }
 
+    /**
+     * Convert from user to UserModel
+     * @param user
+     * @return
+     */
     public UserModel transform(User user) {
         if(user == null) {
             throw new IllegalArgumentException("Can not transform null value");
@@ -27,6 +32,11 @@ public class UserModelDataMapper {
         return new UserModel(user.getUserName(), user.getEmail());
     }
 
+    /**
+     * Convert from userList to userModelList.
+     * @param userCollection
+     * @return
+     */
     public List<UserModel> transform(Collection<User> userCollection) {
         List<UserModel> userModelList = new ArrayList<>();
 

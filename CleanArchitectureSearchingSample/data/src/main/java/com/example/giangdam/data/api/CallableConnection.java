@@ -15,6 +15,7 @@ import okhttp3.Request;
 
 /**
  * Created by cpu11326-local on 30/01/2018.
+ * Class quản lý connection đến server
  */
 
 public class CallableConnection implements Callable<String> {
@@ -35,14 +36,19 @@ public class CallableConnection implements Callable<String> {
 
     @Nullable
     String requestSyncCall() {
+        // Kết nối tới API
         connectToApi();
+
         // Log response
         logD("Response: " + response);
         return response;
     }
 
     private void connectToApi() {
+        // Khởi tao HTTP Client.
         OkHttpClient okHttpClient = this.createClient();
+
+        // Khởi tạo request .
         final Request request = new Request.Builder()
                 .url(this.url)
                 .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_VALUE_JSON)
@@ -53,6 +59,7 @@ public class CallableConnection implements Callable<String> {
         logD("Request: " + request.toString());
 
         try {
+            // request và lấy về response.
             this.response = okHttpClient.newCall(request).execute().body().string();
         } catch (IOException e) {
             e.printStackTrace();

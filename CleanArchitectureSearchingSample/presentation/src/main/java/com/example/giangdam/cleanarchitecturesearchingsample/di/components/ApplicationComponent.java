@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.example.giangdam.cleanarchitecturesearchingsample.di.modules.ApplicationModule;
 import com.example.giangdam.cleanarchitecturesearchingsample.view.activity.BaseActivity;
-import com.example.giangdam.data.cache.UserCache;
 import com.example.giangdam.domain.repository.UserRepository;
 import com.example.giangdam.domain.thread.ObserveOnThread;
 import com.example.giangdam.domain.thread.SubcribeOnThread;

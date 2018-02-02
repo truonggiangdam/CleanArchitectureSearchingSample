@@ -22,6 +22,11 @@ public class FileManager {
     @Inject
     FileManager() {}
 
+    /**
+     * write content to file
+     * @param file
+     * @param content : json data
+     */
     public void writeToFile(File file, String content) {
         if(file.exists()) {
             try {
@@ -34,6 +39,11 @@ public class FileManager {
         }
     }
 
+    /**
+     * read content từ file
+     * @param file
+     * @return : json data
+     */
     public String readFileContent(File file) {
         final StringBuilder contentBuilder = new StringBuilder();
         if(file.exists()) {
@@ -59,10 +69,20 @@ public class FileManager {
         return contentBuilder.toString();
     }
 
+    /**
+     * Kiểm tra xem file có tồn tại hay không
+     * @param file
+     * @return
+     */
     public boolean exists(File file) {
         return file.exists();
     }
 
+    /**
+     * Xóa toàn bộ data trong directory.
+     * @param directory
+     * @return
+     */
     public boolean clearDirectory(File directory) {
         boolean result = false;
         if(directory.exists()) {
@@ -77,6 +97,14 @@ public class FileManager {
         return result;
     }
 
+
+    /**
+     * write file using preferences.
+     * @param context
+     * @param preferenceFileName
+     * @param key
+     * @param value
+     */
     public void writeToPreferences(Context context, String preferenceFileName, String key, long value) {
         final SharedPreferences sharedPreferences = context.getSharedPreferences(preferenceFileName,
                 Context.MODE_PRIVATE);
@@ -85,6 +113,13 @@ public class FileManager {
         editor.apply();
     }
 
+    /**
+     * Get data from preferences.
+     * @param context
+     * @param preferenceFileName
+     * @param key
+     * @return
+     */
     public long getFromPreferences(Context context, String preferenceFileName, String key) {
         final SharedPreferences sharedPreferences = context.getSharedPreferences(preferenceFileName,
                 Context.MODE_PRIVATE);

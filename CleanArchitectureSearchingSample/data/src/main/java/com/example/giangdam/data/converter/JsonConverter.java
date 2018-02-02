@@ -16,6 +16,9 @@ import javax.inject.Singleton;
 public class JsonConverter {
     private final Gson gson = new Gson();
 
+    /**
+     * Convert from listObject to jsonString
+     */
     @Inject
     JsonConverter() {}
     public String listObjectToJson(Object listObject) {
@@ -23,6 +26,12 @@ public class JsonConverter {
         return gson.toJson(listObject, listObjectType);
     }
 
+    /**
+     * Convert from jsonString to listObject.
+     * @param jsonString
+     * @param <T>
+     * @return
+     */
     public <T> List<T> jsonToListObject(String jsonString) {
         final Type listObjectType = new TypeToken<List<T>>() {}.getType();
         return gson.fromJson(jsonString, listObjectType);

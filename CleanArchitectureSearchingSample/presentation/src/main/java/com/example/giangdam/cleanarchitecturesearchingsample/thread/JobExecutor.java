@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 /**
  * Created by cpu11326-local on 19/01/2018.
+ * Provide thread executor.
  */
 
 public class JobExecutor implements SubcribeOnThread {

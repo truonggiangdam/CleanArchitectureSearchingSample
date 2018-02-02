@@ -19,6 +19,11 @@ public class UserEntityFileDataMapper {
     @Inject
     public UserEntityFileDataMapper() {}
 
+    /**
+     * Convert from userData to userEntity
+     * @param userData
+     * @return
+     */
     public UserEntity transform(UserData userData) {
         UserEntity userEntity = null;
         if(userData != null) {
@@ -30,6 +35,11 @@ public class UserEntityFileDataMapper {
         return userEntity;
     }
 
+    /**
+     * Convert from userDataList to userEntityList
+     * @param userDataCollection
+     * @return
+     */
     public List<UserEntity> transform(Collection<UserData> userDataCollection) {
         final List<UserEntity> userEntityList = new ArrayList<>();
         for(UserData userData: userDataCollection) {

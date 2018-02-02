@@ -10,6 +10,7 @@ import io.reactivex.Observable;
 
 /**
  * Created by cpu11326-local on 01/02/2018.
+ * Client library giúp handle việc gọi tới API.
  */
 
 public class RetrofitClient implements ApiClient {

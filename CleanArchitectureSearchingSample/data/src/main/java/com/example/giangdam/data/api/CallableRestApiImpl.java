@@ -19,10 +19,12 @@ import io.reactivex.ObservableOnSubscribe;
 
 /**
  * Created by cpu11326-local on 30/01/2018.
+ * Implement CallbaleRestApi để hiện thực hóa việc connect tới API.
  */
 
 public class CallableRestApiImpl implements CallableRestApi {
     private final Context context;
+    // Mapper class dùng để chuyển đổi dữ liệu qua loại giữa Json và JavaObject.
     private final UserEntityJsonMapper userEntityJsonMapper;
 
     @Inject
@@ -40,9 +42,12 @@ public class CallableRestApiImpl implements CallableRestApi {
         return Observable.create(new ObservableOnSubscribe<List<UserEntity>>() {
             @Override
             public void subscribe(ObservableEmitter<List<UserEntity>> emitter) throws Exception {
+                // kiểm tra kết nối internet
                 if(isThereInternetConnection()) {
                     String responseUserEntities = getUserEntitiesFromApi();
+
                     if(responseUserEntities != null) {
+                        // Nếu dữ liệu lấy về thành công, gọi hàm mapper convert json to object và emit
                         emitter.onNext(userEntityJsonMapper.transformUserEntityCollection(responseUserEntities));
                         emitter.onComplete();
                     } else {
@@ -75,15 +80,30 @@ public class CallableRestApiImpl implements CallableRestApi {
         });
     }
 
+    /**
+     * // Khởi tạo client với GET method và request lên server.
+     * @return
+     * @throws MalformedURLException
+     */
     private String getUserEntitiesFromApi() throws MalformedURLException {
         return CallableConnection.createGET(API_URL_GET_USER_LIST).requestSyncCall();
     }
 
+    /**
+     *  // Khởi tạo client với GET method và request lên server.
+     * @param userId
+     * @return
+     * @throws MalformedURLException
+     */
     private String getUserDetailsFromApi(int userId) throws MalformedURLException {
         String apiUrl = API_URL_GET_USER_DETAILS + userId + ".json";
         return CallableConnection.createGET(apiUrl).requestSyncCall();
     }
 
+    /**
+     * Kiểm tra kết nối internet
+     * @return
+     */
     private boolean isThereInternetConnection() {
         ConnectivityManager connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();

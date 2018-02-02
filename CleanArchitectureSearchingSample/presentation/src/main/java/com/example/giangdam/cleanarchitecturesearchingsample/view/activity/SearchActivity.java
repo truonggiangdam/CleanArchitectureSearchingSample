@@ -41,19 +41,26 @@ public class SearchActivity extends BaseActivity implements SearchUserView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // khởi tạo injector
         initializeInjector();
+        // set view cho presenter
         searchUserPresenter.setView(this);
 
+        // findview và khởi tạo recyclerView.
         initializeView();
-
     }
 
+    /**
+     * findView và khởi tạo recyclerView.
+     */
     private void initializeView() {
+        // findViewById.
         recyclerView = findViewById(R.id.recyclerView);
         textEmpty = findViewById(R.id.textEmpty);
         progressLoading = findViewById(R.id.progressLoading);
         editKeyWork = findViewById(R.id.editKeyWork);
 
+        // khởi tạo recyclerView.
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(searchListAdapter);
     }
@@ -64,8 +71,11 @@ public class SearchActivity extends BaseActivity implements SearchUserView {
 
     @Override
     public void updateUI(List<UserModel> users) {
+        // hiển thị recycler View và tắt viewEmpty.
         recyclerView.setVisibility(View.VISIBLE);
         textEmpty.setVisibility(View.GONE);
+
+        // update data và notify data set changed.
         searchListAdapter.updateDataSet(users);
     }
 

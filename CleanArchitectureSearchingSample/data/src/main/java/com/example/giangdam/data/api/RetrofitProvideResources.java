@@ -15,13 +15,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by cpu11326-local on 01/02/2018.
+ * Class util giúp cung cấp các thông tin cần thiết để khởi tạo RetrofitRestApi.
  */
 
 public class RetrofitProvideResources {
     String API_BASE_URL =
             "https://raw.githubusercontent.com/android10/Sample-Data/master/Android-CleanArchitecture/";
 
+    // Http Client
     private final OkHttpClient okHttpClient;
+    // ConverterClass giúp chuyển đối qua lại giữa json và object.
     private final GsonConverterFactory gsonConverterFactory;
 
     @Inject
@@ -30,6 +33,10 @@ public class RetrofitProvideResources {
         gsonConverterFactory = provideGsonConverterFactory();
     }
 
+    /**
+     * Khởi tạo retrofit.
+     * @return
+     */
     public Retrofit provideRetrofit() {
         return new Retrofit.Builder()
                 .client(okHttpClient)
@@ -39,21 +46,37 @@ public class RetrofitProvideResources {
                 .build();
     }
 
+    /**
+     * Khởi tạo CallAdapterFactory.
+     * @return
+     */
     private CallAdapter.Factory provideCallAdapterFactory() {
         return RxJava2CallAdapterFactory.create();
     }
 
-
+    /**
+     * Khởi tạo RetrofitRestAPI.
+     * @return
+     */
     public RetrofitRestApi provideApi() {
         return provideRetrofit().create(RetrofitRestApi.class);
     }
 
+    /**
+     * Khởi tạo GsonConverterFactory.
+     * @return
+     */
     private GsonConverterFactory provideGsonConverterFactory() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         return GsonConverterFactory.create(gsonBuilder.create());
     }
 
+    /**
+     * Khởi tạo HttpClient.
+     * @return
+     */
     private OkHttpClient provideOkHttpClient() {
+        // Khởi tạo LoggingInterceptor để ghi lại log của request và response.
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(
                 new HttpLoggingInterceptor.Logger() {
                     @Override
@@ -66,8 +89,11 @@ public class RetrofitProvideResources {
                     }
                 }
         );
+
+        // Set log level là phần BODY.
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+        // trả về HttpClient mới.
         return new OkHttpClient().newBuilder()
                 .addInterceptor(httpLoggingInterceptor)
                 .build();

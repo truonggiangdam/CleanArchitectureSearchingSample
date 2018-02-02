@@ -10,9 +10,11 @@ import io.reactivex.Observable;
 
 /**
  * Created by cpu11326-local on 01/02/2018.
+ * Client sử dụng callbale truyền thống.
  */
 
 public class CallableClient implements ApiClient {
+    // Rest API to call server.
     private final CallableRestApi callableRestApi;
 
     @Inject

@@ -8,19 +8,12 @@ import com.example.giangdam.domain.model.User;
 import com.example.giangdam.domain.repository.UserRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
@@ -40,8 +33,11 @@ public class UserDataRepository implements UserRepository{
 
     @Override
     public Observable<List<User>> users(final String userName) {
+        // data store này dùng để get list user, được khởi tạo tùy thuộc vào việc user cache hay từ trên cloud.
         final UserDataStore userDataStoreGetList = this.userDataStoreFactory.create();
+        // data story này dùng để get details của user, luôn luôn lấy từ cloud.
         final UserDataStore userDataStoreGetDetails = this.userDataStoreFactory.createCloudDataStore();
+        // data story này dùng để lấy user list from file.
         final UserDataStore userDataStoreFromFile = this.userDataStoreFactory.createLocalFileUserDataStore(userName);
 
         Observable<List<User>> sourceFromServer =  userDataStoreGetList.userEntityList().map(new Function<List<UserEntity>, List<User>>() {
@@ -92,13 +88,14 @@ public class UserDataRepository implements UserRepository{
             }
         });
 
+
+        // zip 2 source lại và trả về dữ liệu tổng hợp.
         return Observable.zip(sourceFromServer, sourceFromFile, new BiFunction<List<User>, List<User>, List<User>>() {
             @Override
             public List<User> apply(List<User> users, List<User> users2) throws Exception {
                 return union(users, users2) ;
             }
         });
-
     }
 
     public static List union(final List list1, final List list2) {
