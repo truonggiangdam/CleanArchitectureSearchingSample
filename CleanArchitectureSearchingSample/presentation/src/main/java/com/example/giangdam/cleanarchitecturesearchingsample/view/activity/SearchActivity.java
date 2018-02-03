@@ -42,6 +42,11 @@ public class SearchActivity extends BaseActivity implements SearchUserView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // khởi tạo injector
+        /*
+            hàm initializeInjector này gọi tay kiểu này thì nếu tạo nhiều Activity
+            thì mỗi Activityđều phải copy paste lại ?
+            có cách nào khi tạo activity mới thì nó generic ra hàm này cho mình ko ?
+         */
         initializeInjector();
         // set view cho presenter
         searchUserPresenter.setView(this);
