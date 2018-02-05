@@ -9,6 +9,12 @@ import com.example.giangdam.domain.config.DeveloperConfig;
  */
 
 public class MimicInternetDelay {
+
+    /*
+        Tại sao biến này ko đặt trong DeveloperConfig luôn,
+        nếu ng Developer khác muốn thay đổi thời gian delay,
+        thì sẽ phải mất công đi tìm chỗ nào
+     */
     private static final long DELAY_TIME = 1000; // milliseconds
 
     public static void delay(Thread thread) throws InterruptedException, BaseLog.CanNotLogException {

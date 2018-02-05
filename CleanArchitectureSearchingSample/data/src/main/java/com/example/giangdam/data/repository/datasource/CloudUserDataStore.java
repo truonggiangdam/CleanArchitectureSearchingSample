@@ -51,6 +51,11 @@ public class CloudUserDataStore implements UserDataStore {
     }
 
     private void mimicInternetDelay() {
+        /*
+            Giang giả lập như vầy thì chỉ là Giang giả lập thời gian gọi lên server,
+            chứ chưa hẳn là giả lập response trả về chậm
+         */
+
         try {
             MimicInternetDelay.delay(Thread.currentThread());
         } catch (InterruptedException e) {
